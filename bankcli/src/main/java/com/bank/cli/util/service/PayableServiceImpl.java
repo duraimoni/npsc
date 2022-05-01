@@ -78,4 +78,22 @@ public class PayableServiceImpl implements PayableService {
 		return returnMessage;
 	}
 
+	@Override
+	public Long owingAmount(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long balanceAmount(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String owingPerson(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
