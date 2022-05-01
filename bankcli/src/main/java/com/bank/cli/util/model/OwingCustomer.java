@@ -9,27 +9,25 @@ import java.util.Map;
  * hold the customer information 
  *
  */
-public class Customer {
+public class OwingCustomer {
 
 	private String name;
 	private Long balance;
 	private Long owning;
-	private String owingCustomerName;
 
-	public Customer(String name,Long balance) {
+	public OwingCustomer(String name,Long balance) {
 		super();
 		this.name = name;
 		this.balance = balance;
 	}
 
-	public Customer() {
+	public OwingCustomer() {
 		super();
 	}
 
 	/**
 	 * to hold the values of another clients to credit/debit amounts
 	 */
-	private Map<String,Customer> anotherClient = new HashMap();
 	
 	
 	public String getName() {
@@ -47,14 +45,6 @@ public class Customer {
 	public void setBalance(Long balance) {
 		this.balance = balance;
 	}
-
-	public Map<String, Customer> getAnotherClient() {
-		return anotherClient;
-	}
-
-	public void setAnotherClient(Map<String, Customer> anotherClient) {
-		this.anotherClient = anotherClient;
-	}
 	public Long getOwning() {
 		return owning;
 	}
@@ -62,16 +52,6 @@ public class Customer {
 	public void setOwning(Long owning) {
 		this.owning = owning;
 	}
-
-	public String getOwingCustomerName() {
-		return owingCustomerName;
-	}
-
-	public void setOwingCustomerName(String owingCustomerName) {
-		this.owingCustomerName = owingCustomerName;
-	}
-
-	 
 
 
 }
