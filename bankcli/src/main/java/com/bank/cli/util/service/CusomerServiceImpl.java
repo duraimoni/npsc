@@ -2,6 +2,7 @@ package com.bank.cli.util.service;
 
 import java.util.Optional;
 
+import com.bank.cli.util.MessageUtil;
 import com.bank.cli.util.model.Customer;
 
 /**
@@ -9,7 +10,7 @@ import com.bank.cli.util.model.Customer;
  *
  */
 public class CusomerServiceImpl implements CustomerService {
-
+	
 	/**
 	 *
 	 */
@@ -31,16 +32,19 @@ public class CusomerServiceImpl implements CustomerService {
 			adduser(name);
 		} 
 		customer = customers.get(name);
-		resetCustomer(name);
-		return "login "+name+" Hello, "+name+"! Your balance is "+customer.getBalance()+".";
+		resetCustomer(customer);
+		String message = MessageUtil.printLoginMessage();
+		return message;// "login "+name+" Hello, "+name+"! Your balance is "+customer.getBalance()+".";
 	}
 
 	/**
 	 * 
 	 */
-	private void resetCustomer(String name) {
-		loginCustomer.setName(name);
-
+	private void resetCustomer(Customer custom) {
+		loginCustomer.setName(custom.getName());
+		loginCustomer.setBalance(custom.getBalance());
+		loginCustomer.setOwning(custom.getOwning());
+		loginCustomer.setOwingCustomerName(custom.getOwingCustomerName());
 	}
 
 }
