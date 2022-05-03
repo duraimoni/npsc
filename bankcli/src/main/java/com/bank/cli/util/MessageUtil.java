@@ -5,14 +5,17 @@ import static com.bank.cli.util.service.BankService.loginCustomer;;
 public class MessageUtil {
 
 	public static String printLoginMessage() {
-		Long balance = loginCustomer.getBalance();
-		Long owing = loginCustomer.getOwning() == null ? 0l : loginCustomer.getOwning();
+		double balance = loginCustomer.getBalance();
+		double owingFrom = loginCustomer.getOwingFrom() == null ? 0l : loginCustomer.getOwingFrom();
+		double owingTo = loginCustomer.getOwingTo() == null ? 0l : loginCustomer.getOwingTo();
 		String owingName = loginCustomer.getOwingCustomerName() == null ? "" : loginCustomer.getOwingCustomerName();
 		String name = loginCustomer.getName();
 
-		String printMessage = "login " + name + " Hello, " + name + "!"
-				+ (owing != 0 ? (" Owing " + -(-owing) + " " + (owing > 0 ? "From" : "To ") + owingName) : "")
-				+ " Your balance is " + balance;
+		String startMessage = "login " + name + " Hello, " + name + "!";
+		String owingFromMessage = owingFrom == 0 ? "" : " Owing " + owingFrom + " from " + owingName;
+		String owingToMessage = owingTo == 0 ? "" : " Owing " + owingTo + " to " + owingName;
+		String balanceMessage = " Your balance is " + balance;
+		String printMessage = startMessage + balanceMessage + owingToMessage + owingFromMessage;
 		System.out.println(printMessage);
 		return printMessage;
 	}
@@ -20,20 +23,22 @@ public class MessageUtil {
 	/**
 	 * 
 	 */
-	public static String printpayMessage(Long amount, Long tAmount) {
-		Long balance = loginCustomer.getBalance();
-		Long owing = loginCustomer.getOwning() == null ? 0l : loginCustomer.getOwning();
+	public static String printpayMessage(double amount, double tAmount, double owingFrom, double owingTo) {
+		double balance = loginCustomer.getBalance();
 		String owingName = loginCustomer.getOwingCustomerName() == null ? "" : loginCustomer.getOwingCustomerName();
 		String name = loginCustomer.getName();
 
 		String startMsg = "pay " + owingName + " " + amount;
-		String balanceMsg = ". Your balance is " + balance + ".";
-		String owingMessage = " Owing " + owing + (owing < 0 ? " to " : " from ") + owingName + ".";
+		String balanceMsg = " Your balance is " + balance + ".";
+//		String owingMessage = " Owing " + owing + (owing < 0 ? " to " : " from ") + owingName + ".";
+		String owingFromMessage = owingFrom > 0 ? "Owing " + owingFrom + " from " + owingName : "";
+		String owingToMessage = owingTo > 0 ? "Owing " + owingTo + " to " + owingName : "";
+		;
 		String transferMsg = " Transferred " + tAmount + " to " + owingName + ".";
-		
-		
-		String printMessage = startMsg + (owing > 0 ? owingMessage : transferMsg) + balanceMsg
-				+ (owing < 0 ? owingMessage : "");
+
+		String printMessage = startMsg + (tAmount == 0 ? " " : transferMsg) + owingFromMessage + balanceMsg
+				+ owingToMessage;
+
 		System.out.println(printMessage);
 		return printMessage;
 	}
@@ -41,24 +46,20 @@ public class MessageUtil {
 	/**
 	 * 
 	 */
-	public static String printTopupMessage(Long tAmount, Long trAmount) {
-		Long balance = loginCustomer.getBalance();
-		Long owing = loginCustomer.getOwning() == null ? 0l : loginCustomer.getOwning();
+	public static String printTopupMessage(double tAmount, double trAmount, double owingTo) {
+		double balance = loginCustomer.getBalance();
 		String owingName = loginCustomer.getOwingCustomerName() == null ? "" : loginCustomer.getOwingCustomerName();
 
 		String startMsag = "topup " + tAmount;
 		String balanceMsg = " Your balance is " + balance;
-		String owingMsg = " Owing " + owing + " to " + owingName;
+		String owingMsg = " Owing " + owingTo + " to " + owingName;
 		String transferedMsg = " Transferred " + trAmount + " to " + owingName;
 		if (trAmount == 0) {
 			transferedMsg = "";
 		}
-		if (owing == 0) {
-			owingMsg = "";
-		}
+
 		// topup 30 Transferred 30 to Harry. Your balance is 0. Owing 40 to Harry.
-		String printMessage = startMsag + (owing > 0 ? owingMsg : transferedMsg) + balanceMsg
-				+ (owing < 0 ? owingMsg : "");
+		String printMessage = startMsag + transferedMsg + balanceMsg + (owingTo > 0 ? owingMsg : "");
 		System.out.println(printMessage);
 		return printMessage;
 	}

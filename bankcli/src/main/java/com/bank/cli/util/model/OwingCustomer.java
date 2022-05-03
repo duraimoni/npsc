@@ -12,10 +12,10 @@ import java.util.Map;
 public class OwingCustomer {
 
 	private String name;
-	private Long balance;
-	private Long owning;
+	private double balance;
+	private double owning;
 
-	public OwingCustomer(String name,Long balance) {
+	public OwingCustomer(String name,double balance) {
 		super();
 		this.name = name;
 		this.balance = balance;
@@ -38,18 +38,18 @@ public class OwingCustomer {
 		this.name = name;
 	}
 
-	public Long getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Long balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	public Long getOwning() {
+	public double getOwingFrom() {
 		return owning;
 	}
 
-	public void setOwning(Long owning) {
+	public void setOwingFrom(double owning) {
 		this.owning = owning;
 	}
 

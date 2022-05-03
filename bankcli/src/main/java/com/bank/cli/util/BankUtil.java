@@ -13,6 +13,7 @@ public class BankUtil {
 	static final String PAY = "pay";
 
 	static List<String> commandLst = new ArrayList(Arrays.asList(LOGIN, TOPUP, PAY));
+ 
 
 	/**
 	 * @param inputVal
@@ -93,7 +94,7 @@ public class BankUtil {
 		if (!isDigits(args[1])) {
 			return "topup command must be login <client> : amount must be number";
 		}
-		if (Long.parseLong(args[1]) < 1) {
+		if (Double.parseDouble(args[1]) < 1) {
 			return"topup command must be login <client> : amount must be positive Number";
 		}
 		return "";
@@ -114,7 +115,7 @@ public class BankUtil {
 		if (!isDigits(args[2])) {
 			return "pay command must be pay <another_client> <amount> : Amount must be Number";
 		}
-		if (Long.parseLong(args[2]) < 1) {
+		if (Double.parseDouble(args[2]) < 1) {
 			return "pay command must be pay <another_client> <amount> : amount must be positive Number";
 		}
 		return "";

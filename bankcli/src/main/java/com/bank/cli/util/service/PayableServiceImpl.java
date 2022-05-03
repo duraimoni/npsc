@@ -13,9 +13,9 @@ import com.bank.cli.util.model.Customer;
 public class PayableServiceImpl implements PayableService {
 
 	@Override
-	public String topUp(String name, Long amount) {
+	public String topUp(String name, double amount) {
 		Customer customer = customers.get(name);
-		Long finalBalance = customer.getBalance() + amount;
+		double finalBalance = customer.getBalance() + amount;
 		customers.get(name).setBalance(finalBalance);
 		if (finalBalance < 1) {
 			finalBalance = 0l;
@@ -32,8 +32,8 @@ public class PayableServiceImpl implements PayableService {
 	 */
 	private String getOwingCustomers(Map<String, Customer> otherClients) {
 		String retMessage = "";
-		List<String> owingLst = otherClients.entrySet().stream().filter(obj -> obj.getValue().getOwning() > 0)
-				.map(Map.Entry::getValue).map(obj -> " Owing " + obj.getOwning() + " to " + obj.getName())
+		List<String> owingLst = otherClients.entrySet().stream().filter(obj -> obj.getValue().getOwingFrom() > 0)
+				.map(Map.Entry::getValue).map(obj -> " Owing " + obj.getOwingFrom() + " to " + obj.getName())
 				.collect(Collectors.toList());
 		for(String owingStr : owingLst) {
 			retMessage = retMessage +" " + owingStr;
@@ -42,12 +42,12 @@ public class PayableServiceImpl implements PayableService {
 	}
 
 	@Override
-	public String payOther(String fromName, String toName, Long amountToTransfer) {
+	public String payOther(String fromName, String toName, double amountToTransfer) {
 		// update the other Customer
-		Long orgAmount = amountToTransfer;
+		double orgAmount = amountToTransfer;
 		Customer logedInCustomer = customers.get(fromName);
-		Long balance = logedInCustomer.getBalance() - amountToTransfer;
-		Long owing = 0l;
+		double balance = logedInCustomer.getBalance() - amountToTransfer;
+		double owing = 0l;
 		if (balance < 0) {
 			owing = -(balance);
 			balance = 0l;
@@ -60,11 +60,11 @@ public class PayableServiceImpl implements PayableService {
 			if (toCustomer == null) {
 				toCustomer = new Customer(toName, amountToTransfer < 0 ? 0 : amountToTransfer);
 			} else {
-				long toBalance = toCustomer.getBalance() + amountToTransfer < 0 ? 0 : amountToTransfer;
+				double toBalance = toCustomer.getBalance() + amountToTransfer < 0 ? 0 : amountToTransfer;
 				toCustomer.setBalance(toBalance);
 			}
 		}
-		toCustomer.setOwning(owing);
+		toCustomer.setOwingFrom(owing);
 
 		logedInCustomer.setBalance(balance);
 
@@ -79,13 +79,13 @@ public class PayableServiceImpl implements PayableService {
 	}
 
 	@Override
-	public Long owingAmount(String userName) {
+	public Double owingAmount(String userName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Long balanceAmount(String userName) {
+	public Double balanceAmount(String userName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -22,7 +22,7 @@ public class CusomerServiceImpl implements CustomerService {
 	 *
 	 */
 	public Customer adduser(String name) {
-		return customers.put(name, new Customer(name, 0l));
+		return customers.put(name, new Customer(name));
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class CusomerServiceImpl implements CustomerService {
 			adduser(name);
 		} 
 		customer = customers.get(name);
-		resetCustomer(customer);
+		resetLogin(customer);
 		String message = MessageUtil.printLoginMessage();
 		return message;// "login "+name+" Hello, "+name+"! Your balance is "+customer.getBalance()+".";
 	}
@@ -40,11 +40,31 @@ public class CusomerServiceImpl implements CustomerService {
 	/**
 	 * 
 	 */
-	private void resetCustomer(Customer custom) {
-		loginCustomer.setName(custom.getName());
-		loginCustomer.setBalance(custom.getBalance());
-		loginCustomer.setOwning(custom.getOwning());
-		loginCustomer.setOwingCustomerName(custom.getOwingCustomerName());
+	public void resetCustomer(double balance, double owingTo, double owingFrom, String toName) {
+		loginCustomer.setBalance(balance);
+		loginCustomer.setOwingFrom(owingFrom);
+		loginCustomer.setOwingTo(owingTo);
+		loginCustomer.setOwingCustomerName(toName);
+		resetLoginCustomer();
+	}
+	
+	public static void resetLoginCustomer() {
+		Customer customer = new Customer();
+		customer.setName(loginCustomer.getName());
+		customer.setBalance(loginCustomer.getBalance());
+		customer.setOwingFrom(loginCustomer.getOwingFrom());
+		customer.setOwingTo(loginCustomer.getOwingTo());
+		customer.setOwingCustomerName(loginCustomer.getOwingCustomerName());
+		customers.put(loginCustomer.getName(), customer);
+	}
+	public static void resetLogin(Customer customer) {
+		loginCustomer.setName(customer.getName());
+		loginCustomer.setBalance(customer.getBalance());
+		loginCustomer.setOwingFrom(customer.getOwingFrom());
+		loginCustomer.setOwingTo(customer.getOwingTo());
+		loginCustomer.setOwingCustomerName(customer.getOwingCustomerName());
+		resetLoginCustomer();
+		//customers.put(loginCustomer.getName(), loginCustomer);
 	}
 
 }

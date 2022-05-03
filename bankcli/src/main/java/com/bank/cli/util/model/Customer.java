@@ -12,18 +12,33 @@ import java.util.Map;
 public class Customer {
 
 	private String name;
-	private Long balance;
-	private Long owning;
+	private Double balance;
+	private Double owingFrom;
+	private Double owingTo;
+	@Override
+	public String toString() {
+		return "Customer [name=" + name + ", balance=" + balance + ", owingFrom=" + owingFrom + ", owingTo=" + owingTo
+				+ ", owingCustomerName=" + owingCustomerName + ", anotherClient=" + anotherClient + "]";
+	}
+
 	private String owingCustomerName;
 
-	public Customer(String name,Long balance) {
+	 
+
+	public Customer(String name) {
 		super();
 		this.name = name;
-		this.balance = balance;
+		this.balance = 0d;
 	}
 
 	public Customer() {
 		super();
+	}
+
+	public Customer(String toName, double d) {
+		// TODO Auto-generated constructor stub
+		this.name = toName;
+		this.balance = 0d;
 	}
 
 	/**
@@ -40,11 +55,11 @@ public class Customer {
 		this.name = name;
 	}
 
-	public Long getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Long balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 
@@ -55,12 +70,23 @@ public class Customer {
 	public void setAnotherClient(Map<String, Customer> anotherClient) {
 		this.anotherClient = anotherClient;
 	}
-	public Long getOwning() {
-		return owning;
+ 
+
+ 
+	public Double getOwingFrom() {
+		return owingFrom;
 	}
 
-	public void setOwning(Long owning) {
-		this.owning = owning;
+	public void setOwingFrom(Double owingFrom) {
+		this.owingFrom = owingFrom;
+	}
+
+	public Double getOwingTo() {
+		return owingTo;
+	}
+
+	public void setOwingTo(Double owingTo) {
+		this.owingTo = owingTo;
 	}
 
 	public String getOwingCustomerName() {

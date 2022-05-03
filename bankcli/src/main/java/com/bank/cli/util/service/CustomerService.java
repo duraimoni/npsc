@@ -13,4 +13,6 @@ public interface CustomerService extends BankService {
 	Customer adduser(String name);
 	
 	String loginUser(String name);
+	
+	void resetCustomer(double balance, double owingTo, double owingFrom, String toName);
 }

@@ -6,13 +6,13 @@
  */
 public interface PayableService extends BankService{
 
-	String topUp(String name, Long amount);
+	String topUp(String name, double amount);
 	
-	String payOther(String fromName, String toName, Long amountToTransfe);
+	String payOther(String fromName, String toName, double amountToTransfe);
 	
-	Long owingAmount(String userName);
+	Double owingAmount(String userName);
 	
-	Long balanceAmount(String userName);
+	Double balanceAmount(String userName);
 	
 	String owingPerson(String userName);
 }

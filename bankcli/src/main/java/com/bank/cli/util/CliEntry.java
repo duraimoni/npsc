@@ -7,6 +7,7 @@ import com.bank.cli.util.service.CusomerServiceImpl;
 import com.bank.cli.util.service.CustomerService;
 import com.bank.cli.util.service.PayableService;
 import com.bank.cli.util.service.PayableServiceImpl;
+import com.bank.cli.util.service.SPayableServiceImpl;
 
 /**
  * @author A575613
@@ -29,9 +30,10 @@ public class CliEntry {
 			}
 
 		}
+
 	}
 
-	private static void callService(String[] inputVal) {
+	public static void callService(String[] inputVal) {
 		String serviceMessage = "";
 		switch (inputVal[0]) {
 		case BankUtil.LOGIN: {
@@ -40,17 +42,18 @@ public class CliEntry {
 			break;
 		}
 		case BankUtil.TOPUP: {
-			PayableService payableService = new PayableServiceImpl();
-			serviceMessage = payableService.topUp(BankService.loginCustomer.getName(), Long.parseLong(inputVal[1]));
+			PayableService payableService = new SPayableServiceImpl();
+			serviceMessage = payableService.topUp(BankService.loginCustomer.getName(), Double.parseDouble(inputVal[1]));
 			break;
 		}
 		case BankUtil.PAY: {
-			PayableService payableService = new PayableServiceImpl();
-			serviceMessage = payableService.payOther(BankService.loginCustomer.getName(), inputVal[1], Long.parseLong(inputVal[2]));
+			PayableService payableService = new SPayableServiceImpl();
+			serviceMessage = payableService.payOther(BankService.loginCustomer.getName(), inputVal[1],
+					Double.parseDouble(inputVal[2]));
 			break;
 		}
 		}
-		System.out.println(serviceMessage);
+		// System.out.println(serviceMessage);
 	}
 
 }
